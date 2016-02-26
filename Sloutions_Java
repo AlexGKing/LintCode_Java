@@ -21,3 +21,22 @@ class Solution {
         return jg;
     }
 };
+
+#2
+设计一个算法，计算出n阶乘中尾部零的个数，例如：11! = 39916800，因此应该返回 2
+要求：O(logN)的时间复杂度
+
+class Solution {
+    /*
+     * param n: As desciption
+     * return: An integer, denote the number of trailing zeros in n!
+     */
+    public long trailingZeros(long n) {
+       long sum = 0;
+        while (n != 0) {
+            sum += n / 5;
+            n /= 5;
+        }
+        return sum;
+    }
+};
