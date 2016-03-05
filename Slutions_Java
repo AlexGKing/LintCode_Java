@@ -40,6 +40,89 @@ class Solution {
         return sum;
     }
 };
+#二分查找
+给定一个排序的整数数组（升序）和一个要查找的整数target，用O(logn)的时间查找到target第一次出现的下标（从0开始,
+如果target不存在于数组中，返回-1。
+样例：在数组 [1, 2, 3, 3, 4, 5, 10] 中二分查找3，返回2。
+标签：二分法，数组
+
+class Solution {
+    /**
+     * @param nums: The integer array.
+     * @param target: Target to find.
+     * @return: The first position of target. Position starts from 0.
+     */
+    public int bs(int[] nums, int start,int end, int target) {
+        if(start>end) {
+            return -1;
+        } else {
+            int mid = (start + end) / 2;
+            if(nums[mid] == target) {
+                while(mid>0){
+                    if(nums[mid] == nums[mid-1]){
+                        mid--;
+                    } else {
+                        break;
+                    }
+                }
+                return mid;
+            } else if(nums[mid]>target) {
+                return bs(nums,start,mid-1,target);
+            } else {
+                return bs(nums,mid+1,end,target);
+            }
+        }
+    }
+    public int binarySearch(int[] nums, int target) {
+        if (nums == null || nums.length == 0) {
+            return -1;
+        } else {
+            return bs(nums,0,nums.length-1,target);
+        }
+    }
+}
+#55 比较字符串
+比较两个字符串A和B，确定A中是否包含B中所有的字符。字符串A和B中的字符都是大写字母
+样例：
+给出 A = "ABCD" B = "ACD"，返回 true
+给出 A = "ABCD" B = "AABC"， 返回 false
+标签：字符串处理 hash
+
+public class Solution {
+    /**
+     * @param A : A string includes Upper Case letters
+     * @param B : A string includes Upper Case letter
+     * @return :  if string A contains all of the characters in B return true else return false
+     */
+    public boolean compareStrings(String A, String B) {
+        if(A == null && B == null){
+            return true;
+        } else if (A == null && B != null) {
+            return false;
+        } else if( A != null && B == null) {
+            return true;
+        } else {
+            int[] alphabetA = new int[26];
+            int[] alphabetB = new int[26];
+            for (int i = 0; i < 26; i++) {
+                alphabetA[i] = 0;
+                alphabetB[i] = 0;
+            }
+            for (int i = 0; i < A.length(); i++) {
+                alphabetA[A.charAt(i) - 'A']++;
+            }
+            for (int i = 0; i < B.length(); i++) {
+                alphabetB[B.charAt(i) - 'A']++;
+            }
+            for(int i = 0; i < 26; i++){
+                if(alphabetB[i] > alphabetA[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+}
 
 #423 有效括号序列
 给定一个字符串所表示的括号序列，包含以下字符： '(', ')', '{', '}', '[' and ']'， 判定是否是有效的括号序列。
