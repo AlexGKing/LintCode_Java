@@ -219,6 +219,55 @@ public class Solution {
         }
     }
 }
+#85 在二叉查找树中插入节点
+给定一棵二叉查找树和一个新的树节点，将节点插入到树中。
+你需要保证该树仍然是一棵二叉查找树。
+样例：
+给出如下一棵二叉查找树，在插入节点6之后这棵二叉查找树可以是这样的：
+  2             2
+ / \           / \
+1   4   -->   1   4
+   /             / \ 
+  3             3   6
+ 标签：二叉查找树
+ /**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     * @param root: The root of the binary search tree.
+     * @param node: insert this node into the binary search tree
+     * @return: The root of the new binary search tree.
+     */
+    public TreeNode insertNode(TreeNode root, TreeNode node) {
+        if (root == null) {
+            return node;
+        } else if(node == null) {
+            return root;
+        } else {
+            if (node.val < root.val && root.left == null){
+                root.left = node;
+                return root;
+            } else if (node.val < root.val) {
+                insertNode(root.left,node);
+            } else if (node.val > root.val && root.right == null) {
+                root.right = node;
+                return root;
+            } else {
+                insertNode(root.right,node);
+            }
+            return root;
+        }
+    }
+}
 #112 删除排序链表中的重复元素
 给定一个排序链表，删除所有重复的元素每个元素只留下一个。
 样例：
