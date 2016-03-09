@@ -353,6 +353,63 @@ public class Solution {
     }  
 }
 
+#245 判断子树
+有两个不同大小的二叉树： T1 有上百万的节点； T2 有好几百的节点。请设计一种算法，判定 T2 是否为 T1的子树。
+样例：
+下面的例子中 T2 是 T1 的子树：
+       1                3
+      / \              / 
+T1 = 2   3      T2 =  4
+        /
+       4
+标签：递归，二叉树
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     * @param T1, T2: The roots of binary tree.
+     * @return: True if T2 is a subtree of T1, or false.
+     */
+    public boolean isSubtree(TreeNode T1, TreeNode T2) {
+        // write your code here
+        if (T2 == null) {
+            return true;
+        } 
+        if (T1 == null){
+            return false;
+        } 
+        if(isEqual(T1,T2)){
+            return true;
+        }
+        if(isSubtree(T1.left,T2) || isSubtree(T1.right,T2)){
+            return true;
+        }
+        return false;
+    }
+    public boolean isEqual(TreeNode T1, TreeNode T2){
+        if (T1 == null && T2 == null) {
+            return true;
+        } else if((T1 == null && T2 != null) || (T1 != null && T2 == null)) {
+            return false;
+        } else {
+            if (T1.val != T2.val) {
+                return false;
+            } else {
+                return isEqual(T1.left, T2.left) && isEqual(T1.right, T2.right);
+            }
+        }
+    }
+}
+
 #373 奇偶分割数组
 分割一个整数数组，使得奇数在前偶数在后。
 样例：给定 [1, 2, 3, 4]，返回 [1, 3, 2, 4]。
