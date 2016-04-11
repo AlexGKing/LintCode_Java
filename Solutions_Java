@@ -311,6 +311,89 @@ public class Solution {
         }
     }
 }
+
+#102 带环链表
+给定一个单向链表判断链表是否带环
+示例：
+1->2->3->4->5->6-
+      ^           |
+      |---------- 
+
+
+标签：链表，两个指针
+/**
+ * Definition for ListNode.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int val) {
+ *         this.val = val;
+ *         this.next = null;
+ *     }
+ * }
+ */ 
+public class Solution {
+    /**
+     * @param head: The first node of linked list.
+     * @return: True if it has a cycle, or false
+     */
+     
+    /**方法一:使用p、q两个指针，p总是向前走，但q每次都从头开始走，对于每个节点，看p走的步数是*否和q一样。
+      如图，当p从6走到3时，用了6步，此时若q从head出发，则只需两步就到3，因而步数*不等，出现矛盾，存在环*/
+    public boolean hasCycle(ListNode head) {  
+        // write your code here
+        if (head == null || head.next == null) {
+            return false;
+        } else if(head.next == head) {
+            return true;
+        } else {
+            ListNode p = head;
+            ListNode q = head;
+            int count = 0;
+            while(p!=null) {
+                int c= 0;
+                q = head;
+                while(p != q){
+                    q = q.next;
+                    c++;
+                    if(p == q && c !=count){
+                        return true;
+                    }
+                }
+                p = p.next;
+                count++;
+            }
+            return false;
+        }
+    }
+    /**
+     ***方法二：使用p、q两个指针，p每次向前走一步，q每次向前走两步，若在某个时候p == q，则存在环。
+     **
+     */
+    public boolean hasCycle(ListNode head) {  
+        // write your code here
+        if (head == null || head.next == null) {
+            return false;
+        } else if(head.next == head) {
+            return true;
+        } else {
+            ListNode p = head;
+            ListNode q = head;
+            while(p!=null && q!=null) {
+                p = p.next;
+                q = q.next;
+                if(q!=null){
+                    q = q.next;
+                }
+                if(p==q&& p!=null){
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+}
+
 #112 删除排序链表中的重复元素
 给定一个排序链表，删除所有重复的元素每个元素只留下一个。
 样例：
